@@ -23,4 +23,22 @@ class Rental
     {
         return $this->movie;
     }
+
+    public function getCharge()
+    {
+        return $this->getMovie()->getCharge($this->getDaysRented());
+    }
+
+     public function getFrequentRenterPoints()
+    {
+        $frequentRenterPoints = 0;
+        // добавить очки для активного арендатора
+        $frequentRenterPoints++;
+        // бонус за аренду новинки на два дня
+        if ($this->getMovie()->getPriceCode() === Movie::NEW_RELEASE && $this->getDaysRented() > 1) {
+            $frequentRenterPoints++;
+        }
+
+        return $frequentRenterPoints;
+    }
 }
